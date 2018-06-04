@@ -2,9 +2,10 @@
 import React, { Component } from 'react';
 import FeaturedMix from './FeaturedMix'
 import Header from './Header'
+import Home from "./Home"
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-const Home = () => <h1>Home</h1>
+
 const Archive = () => <h1>Archive</h1>
 const About = () => <h1>About</h1>
 
