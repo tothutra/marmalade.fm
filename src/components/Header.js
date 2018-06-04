@@ -6,7 +6,7 @@ const Header = props => (
     <h1 className="ttu tracked-mega tc anton mt0 mb 3">Marmalade.fm</h1>
     <ul className="list flex justify-center pl0">
       <li className="mh2">
-        <NavLink to="/" className="nav-link link biryani-black f6 ttu gray">What’s hot</NavLink>
+        <NavLink exac to="/" className="nav-link link biryani-black f6 ttu gray">What’s hot</NavLink>
       </li>
       <li className="mh2">
         <NavLink to="/archive" className="nav-link link biryani-black f6 ttu gray">Archive</NavLink>
