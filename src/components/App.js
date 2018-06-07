@@ -19,6 +19,16 @@ class App extends Component {
     }
   }
 
+  actions = {
+    togglePlay: () =>{
+      console.log("toggle play")
+      this.widget.togglePlay()
+    },
+    playMix: mixname => {
+      this.widget.load(mixname, true)
+    }
+  }
+
   mountAudio = async () => {
     this.widget = Mixcloud.PlayerWidget(this.player)
     await this.widget.ready
@@ -40,14 +50,6 @@ class App extends Component {
     this.mountAudio()
   }
 
-  togglePlay = () =>{
-    console.log("toggle play")
-    this.widget.togglePlay()
-  }
-
-  playMix = mixname => {
-    this.widget.load(mixname, true)
-  }
   render() {
     return (
       <Router>
@@ -59,7 +61,7 @@ class App extends Component {
               <div>
                 <button onClick={this.togglePlay}>{this.state.playing? "pause" : "play"}</button>
               </div>
-              <Route exact path="/"  component={Home}/>
+              <Route exact path="/"  component={()=> <Home {...this.state} {...this.actions}/>}/>
               <Route path="/archive"  component={Archive}/>
               <Route path="/about"  component={About}/>
             </div>
