@@ -24,8 +24,16 @@ class App extends Component {
       console.log("toggle play")
       this.widget.togglePlay()
     },
-    playMix: mixname => {
-      this.widget.load(mixname, true)
+    playMix: mixName => {
+      const {currentMix} = this.state
+      if (currentMix===mixName) {
+        //return will stop the code from running
+        return this.widget.togglePlay()
+      }
+      this.setState({
+        currentMix: mixName,
+      })
+      this.widget.load(mixName, true)
     }
   }
 
@@ -58,9 +66,9 @@ class App extends Component {
             <FeaturedMix />
             <div className="w-50-l relative z-1">
               <Header />
-              <div>
+              {/*<div>
                 <button onClick={this.togglePlay}>{this.state.playing? "pause" : "play"}</button>
-              </div>
+              </div>*/}
               <Route exact path="/"  component={()=> <Home {...this.state} {...this.actions}/>}/>
               <Route path="/archive"  component={Archive}/>
               <Route path="/about"  component={About}/>
