@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 import FeaturedMix from './FeaturedMix'
 import Header from './Header'
 import Home from "./Home"
+import Archive from "./Archive"
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import mixesData from "../data/mixes"
 
 
-const Archive = () => <h1>Archive</h1>
 const About = () => <h1>About</h1>
 
 class App extends Component {
@@ -90,8 +90,8 @@ class App extends Component {
               {/*<div>
                 <button onClick={this.togglePlay}>{this.state.playing? "pause" : "play"}</button>
               </div>*/}
-              <Route exact path="/"  component={()=> <Home {...this.state} {...this.actions}/>}/>
-              <Route path="/archive"  component={Archive}/>
+              <Route exact path="/"  render={()=> <Home {...this.state} {...this.actions}/>}/>
+              <Route path="/archive"  render={() => <Archive {...this.state} {...this.actions}/>}/>
               <Route path="/about"  component={About}/>
             </div>
           </div>
