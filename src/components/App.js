@@ -15,7 +15,8 @@ class App extends Component {
     super(props);
     this.state = {
       playing: false,
-      currentMix: ""
+      currentMix: "",
+      mix: null,
     }
   }
 
@@ -37,6 +38,21 @@ class App extends Component {
     }
   }
 
+  fetchMixes = async () => {
+    try {
+      const link = "https://api.mixcloud.com/HeadphoneCommute/k-insistence-on-purity/"
+      const response = await fetch(link)
+      const data = await response.json()
+      console.log(data)
+      this.setState({
+        mix: data,
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   mountAudio = async () => {
     this.widget = Mixcloud.PlayerWidget(this.player)
     await this.widget.ready
@@ -51,11 +67,11 @@ class App extends Component {
         playing: true,
       })
     )
-    console.log(this.widget)
   }
 
   componentDidMount () {
     this.mountAudio()
+    this.fetchMixes()
   }
 
   render() {
