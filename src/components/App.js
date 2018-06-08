@@ -4,6 +4,7 @@ import FeaturedMix from './FeaturedMix'
 import Header from './Header'
 import Home from "./Home"
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import mixesData from "../data/mixes"
 
 
 const Archive = () => <h1>Archive</h1>
@@ -17,6 +18,8 @@ class App extends Component {
       playing: false,
       currentMix: "",
       mix: null,
+      mixIds: mixesData,
+      mixes: []
     }
   }
 
@@ -39,17 +42,18 @@ class App extends Component {
   }
 
   fetchMixes = async () => {
-    try {
-      const link = "https://api.mixcloud.com/HeadphoneCommute/k-insistence-on-purity/"
-      const response = await fetch(link)
-      const data = await response.json()
-      console.log(data)
-      this.setState({
-        mix: data,
-      })
-    } catch (error) {
-      console.log(error);
-    }
+    const {mixIds} = this.state
+    mixIds.map(async id => {
+      try {
+        const response = await fetch(`https://api.mixcloud.com${id}`)
+        const data = await response.json()
+        this.setState((prevState, props) => ({
+          mixes: [...prevState.mixes, data]
+        }))
+      } catch (error) {
+        console.log(error);
+      }
+    })
   }
 
 
