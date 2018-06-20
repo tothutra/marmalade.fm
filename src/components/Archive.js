@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
 import PlayButton from "./PlayButton"
 import PlayMix from "./PlayMix"
+
 
 const Archive = ({mixes,...props}) => (
   <ul className="list pl0 archive mv0 padding-bottom">
@@ -18,4 +20,4 @@ const Archive = ({mixes,...props}) => (
     ))}
   </ul>
 )
-export default Archive
+export default connect(state => state)(Archive)

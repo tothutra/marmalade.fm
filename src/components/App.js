@@ -1,13 +1,17 @@
 /*global Mixcloud*/
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import { connect } from 'react-redux'
+
 import FeaturedMix from './FeaturedMix'
 import Header from './Header'
 import Home from "./Home"
 import Archive from "./Archive"
 import About from "./About"
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import mixesData from "../data/mixes"
 import Show from "./Show"
+
+import mixesData from '../data/mixes'
+import actions from '../store/actions'
 
 class App extends Component {
 
@@ -17,8 +21,6 @@ class App extends Component {
       playing: false,
       currentMix: "",
       mix: null,
-      mixIds: mixesData,
-      mixes: []
     }
   }
 
@@ -41,14 +43,12 @@ class App extends Component {
   }
 
   fetchMixes = async () => {
-    const {mixIds} = this.state
-    mixIds.map(async id => {
+    const {addMix} = this.props
+    mixesData.map(async id => {
       try {
         const response = await fetch(`https://api.mixcloud.com${id}`)
         const data = await response.json()
-        this.setState((prevState, props) => ({
-          mixes: [...prevState.mixes, data]
-        }))
+        addMix(data)
       } catch (error) {
         console.log(error);
       }
@@ -78,7 +78,7 @@ class App extends Component {
   }
 
   render() {
-    const [firstMix = {}] = this.state.mixes
+    const [firstMix = {}] = this.props.mixes
     return (
       <Router>
         <div>
@@ -89,15 +89,10 @@ class App extends Component {
               {/*<div>
                 <button onClick={this.togglePlay}>{this.state.playing? "pause" : "play"}</button>
               </div>*/}
-              <Route exact path="/"  render={()=> <Home {...this.state} {...this.actions}/>}/>
-              <Route path="/archive"  render={() => <Archive {...this.state} {...this.actions}/>}/>
-              <Route path="/about"  render={() => <About {...this.state} {...this.actions}/>}/>
-
-              <Route
-                path="/show/:slug"
-                render={
-                  routeParams => <Show {...routeParams} {...this.state}/>
-                }/>
+              <Route exact path="/"  component={Home}/>
+              <Route path="/archive"  component={Archive}/>
+              <Route path="/about"  component={About}/>
+              <Route path="/show/:slug" component={Show}/>
             </div>
           </div>
           {/*<AudioPlayer />*/}
@@ -116,4 +111,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(state => state, actions)(App);

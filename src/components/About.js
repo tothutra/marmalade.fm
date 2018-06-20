@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
+
 import Counter from './Counter'
 import Stat from './Stat'
 
-const About = ({mixes, ...props}) => (
+const About = ({mixes}) => (
   <div className="ph3 ph4-l pad-bottom mb4">
     <div className="measure center lh-copy">
       <p className="mt0">Marmalade.fm features the latest and greatest in grooves, beats and world music.</p>
@@ -14,4 +16,4 @@ const About = ({mixes, ...props}) => (
   </div>
 )
 
-export default About
+export default connect(state => state)(About)
